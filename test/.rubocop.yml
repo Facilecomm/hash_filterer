@@ -1,0 +1,9 @@
+inherit_from: ../.rubocop.yml
+
+# Tests can be very long and that's fine
+Metrics/ClassLength:
+  Enabled: false
+
+# Most test classes are obvious in what they test
+Style/Documentation:
+  Enabled: false
