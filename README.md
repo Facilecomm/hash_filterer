@@ -34,3 +34,8 @@ filterer.accept? 'foo' => {} # false (as nil_ok is false)
 filterer.accept? 'foo' => [{ 'plouf' => 'bar' }, { 'plouf' => 'bar-bar' }] # true (as at_least_one is true)
 filterer.error_messages # [] # As apply to previous check
 ```
+
+## Tests
+```sh
+rake test
+```
