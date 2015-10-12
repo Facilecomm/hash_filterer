@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'hash_filterer'
-  s.version     = '0.1.0'
-  s.date        = '2015-09-10'
+  s.version     = '0.1.1'
+  s.date        = '2015-10-12'
   s.summary     = 'Applies rules to a hash'
   s.description = 'Applies rules to a hash deciding if it fits or not'
   s.authors     = ['Guillaume Leseur']

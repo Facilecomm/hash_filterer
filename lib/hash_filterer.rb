@@ -14,7 +14,8 @@ class HashFilterer
     end
 
     def self.allowed_preprocessors
-      ['downcase']
+      # TODO: Make this a config / maybe just remove
+      ['downcase', 'upcase', 'nil?', 'blank?', 'to_s']
     end
 
     # nil_ok should be true or false to specify the behavior when the value is nil
