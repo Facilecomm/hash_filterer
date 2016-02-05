@@ -6,3 +6,6 @@
 
 # 0.1.1
  - Adding basic preprocessors
+
+# 0.1.2
+ - Adding to_i and to_f as preprocessors
