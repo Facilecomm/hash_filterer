@@ -59,6 +59,14 @@ class HashFiltererTest < Test::Unit::TestCase
     assert_accepted 'toto' => string
   end
 
+  test 'applies multiple preprocessors' do
+    string = ' A Surfer '
+    assert_not_accepted 'toto' => string
+    @filterer = nil
+    @config = [rule_hash(preprocessor: %w(downcase strip))]
+    assert_accepted 'toto' => string
+  end
+
   test 'stores errors' do
     assert_not_accepted 'toto' => 'a swimmer'
     assert_equal @filterer.error_messages, ['Not a swimmer == a surfer']
@@ -104,7 +112,7 @@ class HashFiltererTest < Test::Unit::TestCase
 
   test 'fills in error messages' do
     assert_not_accepted 'toto' => 'a swimmer'
-    assert_equal ["Not a swimmer == a surfer"], filterer.error_messages
+    assert_equal ['Not a swimmer == a surfer'], filterer.error_messages
   end
 
   test 'reset the error at each try' do

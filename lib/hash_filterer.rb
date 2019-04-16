@@ -15,7 +15,7 @@ class HashFilterer
 
     def self.allowed_preprocessors
       # TODO: Make this a config / maybe just remove
-      ['downcase', 'upcase', 'nil?', 'blank?', 'to_s', 'to_f', 'to_i']
+      ['downcase', 'upcase', 'nil?', 'blank?', 'to_s', 'to_f', 'to_i', 'strip']
     end
 
     # nil_ok should be true or false to specify the behavior when the value is nil
@@ -24,7 +24,7 @@ class HashFilterer
       @operator = operator
       @value = value
       @nil_ok = nil_ok || false
-      @preprocessor = preprocessor
+      @preprocessors = Array.wrap preprocessor
       @at_least_one = at_least_one || false
       check_operator!
       check_preprocessor!
@@ -63,8 +63,10 @@ class HashFilterer
 
     def preprocess_value(val)
       return nil if val.nil?
-      return val unless @preprocessor
-      val.public_send @preprocessor
+      return val if @preprocessors.empty?
+      @preprocessors.inject(val) do |memo, prep|
+        memo.public_send prep
+      end
     end
 
     def extract_values(hash, current_keys)
@@ -82,8 +84,8 @@ class HashFilterer
     end
 
     def check_preprocessor!
-      return unless @preprocessor
-      fail InvalidPreprocessor unless self.class.allowed_preprocessors.include? @preprocessor
+      return if @preprocessors.all? { |prep| self.class.allowed_preprocessors.include? prep }
+      fail InvalidPreprocessor, @preprocessors
     end
   end
 

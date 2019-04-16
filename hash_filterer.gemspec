@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'hash_filterer'
-  s.version     = '0.1.2'
+  s.version     = '0.1.3'
   s.date        = '2016-02-05'
   s.summary     = 'Applies rules to a hash'
   s.description = 'Applies rules to a hash deciding if it fits or not'
