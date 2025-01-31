@@ -75,8 +75,13 @@ class HashFilterer
 
       val = hash[key]
       return [val] if current_keys.length == 0
-      return val.map { |v| extract_values v, current_keys.dup }.sum if val.is_a? Array
+      return extract_array_values val, current_keys if val.is_a? Array
       extract_values val, current_keys
+    end
+
+    def extract_array_values(val, current_keys)
+      return [nil] if val.length == 0
+      val.map { |v| extract_values v, current_keys.dup }.sum
     end
 
     def check_operator!

@@ -77,6 +77,16 @@ class HashFiltererTest < Test::Unit::TestCase
     assert_accepted 'tata' => [{ 'toto' => 'a surfer' }]
   end
 
+  test 'ok with empty array in the middle - is considered as nil' do
+    @config = [rule_hash('==', %w(tata toto), nil_ok: true)]
+    assert_accepted 'tata' => []
+  end
+
+  test 'empty array in the middle - nil not ok' do
+    @config = [rule_hash('==', %w(tata toto), nil_ok: false)]
+    assert_not_accepted 'tata' => []
+  end
+
   test 'ok when all ok' do
     @config = [rule_hash('==', %w(tata toto))]
     assert_accepted 'tata' => [{ 'toto' => 'a surfer' }, { 'toto' => 'a surfer' }]
@@ -139,12 +149,12 @@ class HashFiltererTest < Test::Unit::TestCase
     @config ||= [rule_hash]
   end
 
-  def rule_hash(operator = '==', key = 'toto', value = 'a surfer', preprocessor: nil, at_least_one: nil)
+  def rule_hash(operator = '==', key = 'toto', value = 'a surfer', preprocessor: nil, at_least_one: nil, nil_ok: true)
     {
       'key' => key,
       'operator' => operator,
       'value' => value,
-      'nil_ok' => true,
+      'nil_ok' => nil_ok,
       'preprocessor' => preprocessor,
       'at_least_one' => at_least_one
     }
